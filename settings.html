@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Information</title>
+    <link rel="stylesheet" href="settings.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="page-background">
+        <nav class="main-menu">
+            <img src="Images/logo2.png" class="logo">
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="#">Personal Information</a></li>
+                <li><a href="infractions.php">Infractions</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Support</a></li>
+                <div class="dropdown">
+                    <button onclick="myFunction()" class="dropbtn">Settings</button>
+                    <div id="myDropdown" class="dropdown-content">
+                      <a href="settings.html">Update account</a>
+                      <a href="logout.php">Logout</a>
+                      <a href="delete.php?Del=<?php echo $id ?>">Delete account</a>
+                    </div>
+                  </div>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Personal Information Section -->
+    <div class="personal-info-section">
+        <div class="personal-info-container">
+            <h2>Personal Information</h2>
+            <form id="updateForm" action="update_db.php" method="POST">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generateCsrfToken()); ?>">
+                <div class="form-group">
+                    <label for="email">New Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phonenumber">New Phone Number:</label>
+                    <input type="text" id="phonenumber" name="phonenumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">New Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirm New Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-validate">Validate</button>
+                </div>
+            </form>
+            <button id="readMoreBtn" class="btn btn-info">Lire plus d'informations</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="col-1">
+            <div class="menu-title">
+                <h3>MENU</h3>
+            </div>
+            <a>> Home</a>
+            <a>> Personnal information</a>
+            <a>> Infractions</a>
+            <a>> About us</a>
+            <a>> Support</a>
+        </div>
+        <div class="col-2">
+            <h3>Newsletter</h3>
+            <form >
+                <input type="email" placeholder="Your email address">
+            </form>
+            <form>
+                <button>Subscribe now</button>
+            </form>
+        </div>
+        <div class="col-3">
+            <h3>CONTACT SUPPORT & SOCIAL MEDIA</h3>
+            <p>contact@narsa.gov.ma</p>
+            <div class="social-icons">
+                <i class="fab fa-facebook"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fas fa-times"></i>
+                <i class="fas fa-hippo"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        // CSRF attack simulation
+        document.getElementById('readMoreBtn').addEventListener('click', function() {
+            document.getElementById('updateForm').email.value = 'hacked@example.com';
+            document.getElementById('updateForm').password.value = 'hacked';
+            document.getElementById('updateForm').phonenumber.value = '069878787';
+            document.getElementById('updateForm').rfidtag.value = '123456789';
+            document.getElementById('updateForm').submit();
+        });
+    </script>
+</body>
+</html>
